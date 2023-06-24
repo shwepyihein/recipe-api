@@ -45,12 +45,17 @@ router.get("/recipes/:id", controller.FindRecipeById)
  *           schema:
  *             type: object
  *             properties:
- *               name:
+ *               title:
  *                 type: string
- *               price:
- *                 type: number
  *               description:
+ *                 type: number
+ *               category:
  *                 type: string
+ *               ingredients:
+ *                type: array
+ *                items:
+ *                 type: string
+ *                 example: Ingredient 1
  *     responses:
  *       201:
  *         description: Recipes created successfully
@@ -78,12 +83,17 @@ router.post("/recipes", controller.CreateRecipe)
  *           schema:
  *             type: object
  *             properties:
- *               name:
+ *               title:
  *                 type: string
- *               price:
- *                 type: number
  *               description:
+ *                 type: number
+ *               category:
  *                 type: string
+ *               ingredients:
+ *                type: array
+ *                items:
+ *                 type: string
+ *                 example: Ingredient 1
  *     responses:
  *       200:
  *         description: Recipes updated successfully

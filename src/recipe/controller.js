@@ -1,4 +1,3 @@
-const pool = require("../../db")
 const Recipe = require("./queries")
 
 const getRecipeALL = async (req, res) => {
@@ -12,10 +11,8 @@ const getRecipeALL = async (req, res) => {
 }
 
 const CreateRecipe = async (req, res) => {
-  const { name, price, description } = req.body
-  console.log(req.body)
   try {
-    const Recipes = await Recipe.create({ name, price, description })
+    const Recipes = await Recipe.create(req.body)
 
     res.status(201).json(Recipes)
   } catch (error) {
@@ -27,11 +24,11 @@ const CreateRecipe = async (req, res) => {
 const FindRecipeById = async (req, res) => {
   const { id } = req.params
   try {
-    const product = await Product.findByPk(id)
-    if (!product) {
-      res.status(404).json({ error: "Product not found" })
+    const Recipes = await Recipe.findByPk(id)
+    if (!Recipes) {
+      res.status(404).json({ error: "Recipes not found" })
     } else {
-      res.json(product)
+      res.json(Recipes)
     }
   } catch (error) {
     console.error(error)
@@ -41,14 +38,14 @@ const FindRecipeById = async (req, res) => {
 
 const UpdateRecipeById = async (req, res) => {
   const { id } = req.params
-  const { name, price, description } = req.body
+
   try {
-    const Recipes = await Recipes.findByPk(id)
+    const Recipes = await Recipe.findByPk(id)
     if (!Recipes) {
       res.status(404).json({ error: "Recipes not found" })
     } else {
-      await Recipes.update({ name, price, description })
-      res.json(Recipes)
+      const newRecipe = await Recipe.update(id, req.body)
+      res.json(newRecipe)
     }
   } catch (error) {
     console.error(error)
@@ -59,12 +56,12 @@ const UpdateRecipeById = async (req, res) => {
 const DeteteRecipeById = async (req, res) => {
   const { id } = req.params
   try {
-    const Recipes = await Recipes.findByPk(id)
+    const Recipes = await Recipe.findByPk(id)
     if (!Recipes) {
       res.status(404).json({ error: "Recipes not found" })
     } else {
-      await Recipes.destroy()
-      res.status(204).end()
+      await Recipe.destroy(id)
+      res.status(204).json({ message: "successfully Deleted" })
     }
   } catch (error) {
     console.error(error)
