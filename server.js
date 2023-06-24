@@ -3,6 +3,7 @@ const { Sequelize } = require("sequelize")
 const swaggerUi = require("swagger-ui-express")
 const swaggerJsdoc = require("swagger-jsdoc")
 const RecipeRoutes = require("./src/recipe/router")
+var cors = require("cors")
 
 const app = express()
 
@@ -12,6 +13,7 @@ app.get("/", (req, res) => {
 
 // Express middlewares
 app.use(express.json())
+app.use(cors())
 
 // API routes
 app.use("/api/v1", RecipeRoutes)
